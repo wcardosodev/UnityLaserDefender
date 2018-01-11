@@ -5,16 +5,12 @@ using UnityEngine.UI;
 
 public class ScoreDisplay : MonoBehaviour {
 
+    public Text[] congratulations;
     public Text[] currentScoreText;
     public Text[] highScoreText;
 
 	// Use this for initialization
 	void Start () {
-
-        foreach(Text t in highScoreText)
-        {
-            t.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
-        }
 
         int currentScore = ScoreKeeper.score;
 
@@ -26,6 +22,23 @@ public class ScoreDisplay : MonoBehaviour {
         if(currentScore > PlayerPrefs.GetInt("HighScore"))
         {
             PlayerPrefs.SetInt("HighScore", ScoreKeeper.score);
+
+            foreach (Text t in congratulations)
+            {
+                t.text = "Congratulations Defender";
+            }
         }
-	}
+        else
+        { 
+            foreach (Text t in congratulations)
+            {
+                t.text = "You need more practice...";
+            }
+        }
+
+        foreach (Text t in highScoreText)
+        {
+            t.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
+        }
+    }
 }
