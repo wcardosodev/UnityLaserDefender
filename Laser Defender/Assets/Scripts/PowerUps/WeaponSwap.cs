@@ -17,8 +17,17 @@ public class WeaponSwap : PowerUp {
 
         player.weapon = Random.Range(2, highestPlayerWeapon + 1);
 
-        yield return new WaitForSeconds(buffTime);
-
+        if (!hasBuff)
+        {
+            hasBuff = true;
+            yield return new WaitForSeconds(buffTime);
+        }
+        else
+        {
+            hasBuff = true;
+            yield return new WaitForSeconds(buffTime += buffTime);
+        }
+        hasBuff = false;
         player.weapon = 1;
     }
 }

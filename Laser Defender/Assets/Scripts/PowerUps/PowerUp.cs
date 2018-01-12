@@ -12,6 +12,8 @@ public abstract class PowerUp : MonoBehaviour {
     [SerializeField]
     protected AudioClip pickupSound;
 
+    protected bool hasBuff = false;
+
     private void Update()
     {
         transform.Translate(Vector2.down * Time.deltaTime * fallSpeed);
