@@ -12,6 +12,11 @@ public class Projectile : MonoBehaviour {
         AudioSource.PlayClipAtPoint(fireClip, transform.position);
     }
 
+    private void Update()
+    {
+        GetComponent<Rigidbody2D>().velocity = transform.up * speed;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.layer != gameObject.layer && !collision.GetComponent<PowerUp>())

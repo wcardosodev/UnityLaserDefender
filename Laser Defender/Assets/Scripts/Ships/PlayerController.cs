@@ -8,6 +8,8 @@ public class PlayerController : Ships {
 
     private LevelManager levelManager;
 
+    public bool translating = false;
+
     void Start () {
         
         try
@@ -32,10 +34,13 @@ public class PlayerController : Ships {
         {
             canAttack = false;
             GameObject proj = null;
+
+            float rotation = 20f;
             for (int i = 0; i < weaponShots; i++)
             {
-                proj = Instantiate(projectiles[0], firepoints[i].position, transform.rotation);
-                proj.GetComponent<Rigidbody2D>().velocity = Vector2.up * proj.GetComponent<Projectile>().speed;
+                proj = Instantiate(projectiles[0], firepoints[0].position, Quaternion.Euler(0,0,-rotation));
+
+                rotation += -10f;
             }
 
             yield return new WaitForSeconds(timeBetweenShots);
@@ -70,7 +75,7 @@ public class PlayerController : Ships {
             }
             else if(weapon == 2)
             {
-                StartCoroutine(StandardProjectile(3));
+                StartCoroutine(StandardProjectile(5));
             }
             else if(weapon == 3)
             {
@@ -78,22 +83,32 @@ public class PlayerController : Ships {
             }
         }
 
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+        if (!translating)
         {
-            transform.position += Vector3.up * Time.smoothDeltaTime * speed;
-        }
-        else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
-        {
-            transform.position += Vector3.down * Time.smoothDeltaTime * speed;
-        }
+            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+            {
+                transform.position += Vector3.up * Time.smoothDeltaTime * speed;
+            }
+            else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+            {
+                transform.position += Vector3.down * Time.smoothDeltaTime * speed;
+            }
 
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-        {
-            transform.position += Vector3.left * Time.smoothDeltaTime * speed;
+            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+            {
+                transform.position += Vector3.left * Time.smoothDeltaTime * speed;
+            }
+            else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+            {
+                transform.position += Vector3.right * Time.smoothDeltaTime * speed;
+            }
         }
-        else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+        else
         {
-            transform.position += Vector3.right * Time.smoothDeltaTime * speed;
+            float x = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
+            float y = Input.GetAxis("Vertical") * Time.deltaTime * speed;
+
+            transform.Translate(x, y, 0);
         }
 
         Vector2 newPos = new Vector2(Mathf.Clamp(transform.position.x, minPos.x, maxPos.x), Mathf.Clamp(transform.position.y, minPos.y, maxPos.y));

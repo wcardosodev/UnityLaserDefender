@@ -102,6 +102,7 @@ MonoBehaviour:
   damage: 150
   speed: 10
   fireClip: {fileID: 8300000, guid: feaf7f98e61a8894e9ae075223d943af, type: 3}
+  destroyTimer: 10
 --- !u!212 &212854481743879892
 SpriteRenderer:
   m_ObjectHideFlags: 1

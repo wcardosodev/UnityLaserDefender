@@ -6,32 +6,42 @@ public class EnemyBoss : EnemyShips {
 
 	void Start () {
         StartCoroutine(Attack01());
+        StartCoroutine(Attack02());
 	}
 
     //Change Background music to specific boss music?
 	
 	// Update is called once per frame
 	void Update () {
+
+        
 		//Move From Left to Right, Up and down a bit? Within the boundaries
 	}
 
     IEnumerator Attack01()
     {
         GameObject proj = null;
-        for(int i = 0; i < 3; i++)
+        for(int i = 0; i < 1; i++)
         {
-            proj = Instantiate(projectiles[0], firepoints[0].position, transform.rotation);
-            proj.GetComponent<Rigidbody2D>().velocity = Velo(proj, firepoints[0], i);
+            proj = Instantiate(projectiles[0], firepoints[i].position, transform.rotation);
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
 
         StartCoroutine(Attack01());
     }
 
     IEnumerator Attack02()
     {
-        yield return new WaitForEndOfFrame();
+        GameObject proj = null;
+        for (int i = 1; i < 3; i++)
+        {
+            proj = Instantiate(projectiles[1], firepoints[i].position, transform.rotation);
+        }
+
+        yield return new WaitForSeconds(1.5f);
+
+        StartCoroutine(Attack02());
     }
 
     Vector2 Velo(GameObject proj, Transform firepoint, int i = 0)

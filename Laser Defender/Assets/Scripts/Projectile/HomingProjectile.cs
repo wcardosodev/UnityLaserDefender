@@ -7,11 +7,11 @@ public class HomingProjectile : Projectile {
 
     Rigidbody2D rb;
 
-    float rotationSpeed = 200f;
+    [SerializeField] float destroyTimer = 5f, rotationSpeed = 200f;
 
     void Awake()
     {
-        StartCoroutine(Destroy(10f));
+        StartCoroutine(Destroy(destroyTimer));
         rb = GetComponent<Rigidbody2D>();
         if (gameObject.CompareTag("Enemy"))
         {
@@ -35,11 +35,20 @@ public class HomingProjectile : Projectile {
 
             direction.Normalize();
 
-            float rotateAmount = Vector3.Cross(direction, transform.up).z;
+            float rotateAmount; 
+
+            if (gameObject.CompareTag("Player"))
+            {
+                rb.velocity = transform.up * speed;
+                rotateAmount = Vector3.Cross(direction, transform.up).z;
+            }
+            else
+            {
+                rb.velocity = -transform.up * speed;
+                rotateAmount = Vector3.Cross(direction, -transform.up).z;
+            }
 
             rb.angularVelocity = -rotateAmount * rotationSpeed;
-
-            rb.velocity = transform.up * speed;
         }
         else
         {
@@ -47,7 +56,7 @@ public class HomingProjectile : Projectile {
         }
     }
 
-    IEnumerator Destroy(float destroyTime)
+    IEnumerator Destroy(float destroyTime = 0)
     {
         yield return new WaitForSeconds(destroyTime);
         Destroy(gameObject);
@@ -56,24 +65,29 @@ public class HomingProjectile : Projectile {
     GameObject FindClosestTarget(Vector3 currentPos)
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        //GameObject[] enemies = FindObjectsOfType(typeof(Enemy)) as GameObject[];
         GameObject closestEnemy = null;
 
-        foreach (GameObject enemy in enemies)
+        if (enemies != null)
         {
-            if (!enemy.GetComponent<Projectile>())
+            foreach (GameObject enemy in enemies)
             {
-                if (closestEnemy == null)
+                if (!enemy.GetComponent<Projectile>())
                 {
-                    closestEnemy = enemy;
-                }
+                    if (closestEnemy == null)
+                    {
+                        closestEnemy = enemy;
+                    }
 
-                if (Vector2.Distance(transform.position, enemy.transform.position) < Vector2.Distance(transform.position, closestEnemy.transform.position))
-                {
-                    closestEnemy = enemy;
+                    if (Vector2.Distance(transform.position, enemy.transform.position) < Vector2.Distance(transform.position, closestEnemy.transform.position))
+                    {
+                        closestEnemy = enemy;
+                    }
                 }
             }
+            return closestEnemy;
         }
-        return closestEnemy;
+
+        StartCoroutine(Destroy());
+        return null;
     }
 }
