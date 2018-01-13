@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1512015022638170}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.19383748, y: -0.085484505, z: 0}
+  m_LocalPosition: {x: 0.53239226, y: -4.8555427, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 150
   speed: 10
-  fireClip: {fileID: 8300000, guid: feaf7f98e61a8894e9ae075223d943af, type: 3}
+  fireClip: {fileID: 8300000, guid: 56c2ee139e8c844ba9a3a17370e3b763, type: 3}
   destroyTimer: 10
   rotationSpeed: 200
 --- !u!212 &212854481743879892

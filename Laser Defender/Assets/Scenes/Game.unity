@@ -1044,7 +1044,7 @@ Prefab:
     - target: {fileID: 114685589461716026, guid: 2e95c059668940c4a9b0d1d0a98350d4,
         type: 2}
       propertyPath: weapon
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2e95c059668940c4a9b0d1d0a98350d4, type: 2}
