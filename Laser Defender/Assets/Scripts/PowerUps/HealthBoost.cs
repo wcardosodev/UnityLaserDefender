@@ -7,7 +7,7 @@ public class HealthBoost : PowerUp {
     protected override IEnumerator PickupAbility(Collider2D collision)
     {
         PlayerController player = collision.GetComponent<PlayerController>();
-        player.Repair();
+        player.SetToMaxHealth();
 
         yield return new WaitForEndOfFrame();
 

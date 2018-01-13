@@ -9,28 +9,32 @@ public class Projectile : MonoBehaviour {
 
     private void Start()
     {
-        AudioSource.PlayClipAtPoint(fireClip, transform.position);
+        AudioSource.PlayClipAtPoint(fireClip, transform.position, .5f);
     }
 
     private void Update()
     {
-        GetComponent<Rigidbody2D>().velocity = transform.up * speed;
+        bool player = gameObject.CompareTag("Player");
+        if (player)
+        {
+            GetComponent<Rigidbody2D>().velocity = transform.up * speed;
+        }
+        else
+        {
+            GetComponent<Rigidbody2D>().velocity = -transform.up * speed;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.layer != gameObject.layer && !collision.GetComponent<PowerUp>())
         {
-            if(collision.GetComponent<PlayerController>())
+            if (collision.GetComponent<Ships>())
             {
-                PlayerController player = collision.GetComponent<PlayerController>();
-                player.TakeDamage(damage);
+                Ships ship = collision.GetComponent<Ships>();
+                ship.TakeDamage(damage);
             }
-            else if(collision.GetComponent<Enemy>())
-            {
-                Enemy enemy = collision.GetComponent<Enemy>();
-                enemy.TakeDamage(damage);
-            }//If Player projectile can collide with homing missiles
+            //If Player projectile can collide with homing missiles
             else if (gameObject.CompareTag("Player"))
             {
                 if(collision.GetComponent<HomingProjectile>() && collision.CompareTag("Enemy"))

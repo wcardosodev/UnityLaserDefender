@@ -23,49 +23,8 @@ public class PlayerController : Ships {
 
         ScoreKeeper.Reset();
     }
-	
-	void Update () {
-        ShipControls();
-	}
 
-    IEnumerator StandardProjectile(int weaponShots = 1)
-    {
-        if (canAttack)
-        {
-            canAttack = false;
-            GameObject proj = null;
-
-            float rotation = 20f;
-            for (int i = 0; i < weaponShots; i++)
-            {
-                proj = Instantiate(projectiles[0], firepoints[0].position, Quaternion.Euler(0,0,-rotation));
-
-                rotation += -10f;
-            }
-
-            yield return new WaitForSeconds(timeBetweenShots);
-            canAttack = true;
-        }
-    }
-
-    IEnumerator HomingRockets()
-    {
-        if (canAttack)
-        {
-            canAttack = false;
-            GameObject proj = null;
-
-            for(int i = firepoints.Length - 2; i < firepoints.Length; i++)
-            {
-                proj = Instantiate(projectiles[1], firepoints[i].position, transform.rotation);
-            }
-
-            yield return new WaitForSeconds(timeBetweenShots);
-            canAttack = true;
-        }
-    }
-
-    void ShipControls()
+    void Update()
     {
         if (Input.GetKey(KeyCode.Space))
         {
@@ -114,6 +73,60 @@ public class PlayerController : Ships {
         Vector2 newPos = new Vector2(Mathf.Clamp(transform.position.x, minPos.x, maxPos.x), Mathf.Clamp(transform.position.y, minPos.y, maxPos.y));
 
         transform.position = newPos;
+    }
+
+    IEnumerator StandardProjectile(int weaponShots = 1)
+    {
+        if (canAttack)
+        {
+            canAttack = false;
+            GameObject proj = null;
+
+            float startRotation = 0;
+            if (weaponShots == 1)
+            {
+                startRotation = 0;
+            }
+            else if(weaponShots == 3)
+            {
+                startRotation = -10f;
+            }
+            else if (weaponShots == 5)
+            {
+                startRotation = -20f;
+            }
+
+            //float endRotation = -20f;
+
+            //float currentRotation = startRotation;
+            for (int i = 0; i < weaponShots; i++)
+            {
+                proj = Instantiate(projectiles[0], firepoints[0].position, Quaternion.Euler(0, 0, startRotation));
+
+                //startRotation += (weaponShots - 1) * currentRotation;
+                startRotation += 10f;
+            }
+
+            yield return new WaitForSeconds(timeBetweenShots);
+            canAttack = true;
+        }
+    }
+
+    IEnumerator HomingRockets()
+    {
+        if (canAttack)
+        {
+            canAttack = false;
+            GameObject proj = null;
+
+            for (int i = firepoints.Length - 2; i < firepoints.Length; i++)
+            {
+                proj = Instantiate(projectiles[1], firepoints[i].position, transform.rotation);
+            }
+
+            yield return new WaitForSeconds(timeBetweenShots);
+            canAttack = true;
+        }
     }
 
     protected override void Die()

@@ -4,71 +4,132 @@ using UnityEngine;
 
 public class EnemyBoss : EnemyShips {
 
-	void Start () {
-        StartCoroutine(Attack01());
-        StartCoroutine(Attack02());
-	}
+    bool bossActivated = false;
+    bool hasMoved = false;
+    float moveDirection = -1;
 
+    float moveThreshold = .5f;
     //Change Background music to specific boss music?
-	
-	// Update is called once per frame
-	void Update () {
+    [SerializeField] AudioClip backgroundClip;
 
-        
-		//Move From Left to Right, Up and down a bit? Within the boundaries
-	}
+    enum Phase { Phase01, Phase02, Phase03}
 
-    IEnumerator Attack01()
+    private void Start()
     {
-        GameObject proj = null;
-        for(int i = 0; i < 1; i++)
+        if (FindObjectOfType<MusicPlayer>())
         {
-            proj = Instantiate(projectiles[0], firepoints[i].position, transform.rotation);
+        MusicPlayer musicPlayer = FindObjectOfType<MusicPlayer>();
+        musicPlayer.SetGameClip(backgroundClip);
         }
 
-        yield return new WaitForSeconds(1.5f);
-
-        StartCoroutine(Attack01());
+        GetComponent<PolygonCollider2D>().enabled = false;
     }
 
-    IEnumerator Attack02()
-    {
-        GameObject proj = null;
-        for (int i = 1; i < 3; i++)
+    void Update () {
+        if (!bossActivated)
         {
-            proj = Instantiate(projectiles[1], firepoints[i].position, transform.rotation);
+            EnterTheArea();
+        }
+        else
+        {
+            GetComponent<PolygonCollider2D>().enabled = true;
+            StartCoroutine(Attack01(3));
+            Move(transform.position.x);
         }
 
-        yield return new WaitForSeconds(1.5f);
-
-        StartCoroutine(Attack02());
     }
 
-    Vector2 Velo(GameObject proj, Transform firepoint, int i = 0)
+    IEnumerator Attack01(int weaponShots)
     {
-        Vector2 dir;
+        if (canAttack)
+        {
+            canAttack = false;
+            GameObject proj = null;
 
-        if(i == 0)
-        {
-            return new Vector2(0, -1) * proj.GetComponent<Projectile>().speed;
+            for (int i = firepoints.Length - 2; i < firepoints.Length; i++)
+            {
+                float startRotation = 0;
+                if (weaponShots == 3)
+                {
+                    startRotation = 10f;
+                }else if(weaponShots == 5)
+                {
+                    startRotation = 20f;
+                }
+                
+                for (int j = 0; j < weaponShots; j++)
+                {
+                    proj = Instantiate(projectiles[0], firepoints[i].position, Quaternion.Euler(0, 0, -startRotation));
+                    startRotation += -10f;
+                }
+            }
+
+            yield return new WaitForSeconds(1.5f);
+            canAttack = true;
+            StartCoroutine(Attack01(weaponShots));
         }
-        else if(i == 1)
+    }
+
+    IEnumerator Attack02(int amntToFire = 1)
+    {
+        for (int i = 0; i < amntToFire; i++)
         {
-            dir = new Vector2(firepoint.position.x + .1f, firepoint.position.y - 1f);
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90;
-            float spread = Random.Range(-10, 10);
-            Quaternion bulletRotation = Quaternion.Euler(new Vector3(0, 0, angle + spread));
-            return new Vector2(.5f, -1) * proj.GetComponent<Projectile>().speed;
+            if (canAttack)
+            {
+                canAttack = false;
+                GameObject proj = null;
+                for (int j = firepoints.Length - 2; j < firepoints.Length; j++)
+                {
+                    proj = Instantiate(projectiles[1], firepoints[j].position, transform.rotation);
+                }
+
+                yield return new WaitForSeconds(1.5f);
+                canAttack = true;
+            }
         }
-        else if(i == 2)
+    }
+
+    void Move(float currentXPos)
+    {
+        if(currentXPos <= minPos.x + .5)
         {
-            dir = new Vector2(firepoint.position.x - .1f, firepoint.position.y - 1f);
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90;
-            float spread = Random.Range(-10, 10);
-            Quaternion bulletRotation = Quaternion.Euler(new Vector3(0, 0, angle + spread));
-            return new Vector2(-.5f, -1) * proj.GetComponent<Projectile>().speed;
+            moveDirection *= -1f;
         }
 
-        return Vector2.down;
+        if(currentXPos >= maxPos.x - .5)
+        {
+            moveDirection *= -1f;
+        }
+
+        transform.Translate(moveDirection * Time.deltaTime * speed, 0, 0);
+    }
+
+    void EnterTheArea()
+    {
+        if (transform.position.y >= 2)
+        {
+            transform.position += Vector3.down * Time.deltaTime * speed;
+        }
+        else
+        {
+            bossActivated = true;
+        }
+    }
+
+    protected override void Die()
+    {
+        if (deathSFX)
+        {
+            AudioSource.PlayClipAtPoint(deathSFX, transform.position);
+        }
+        if (explosionEffect)
+        {
+            GameObject effect = Instantiate(explosionEffect, transform.position, transform.rotation);
+            Destroy(effect, 2);
+        }
+
+        scoreKeeper.Score(pointsWorth);
+
+        Destroy(gameObject);
     }
 }

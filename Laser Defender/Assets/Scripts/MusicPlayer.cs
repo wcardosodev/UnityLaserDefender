@@ -7,14 +7,14 @@ public class MusicPlayer : MonoBehaviour {
 
     static MusicPlayer instance = null;
 
-    public AudioClip startClip;
-    public AudioClip gameClip;
-    public AudioClip endClip;
+    public AudioClip startClip, mainGameClip, endClip;
+    AudioClip gameClip;
 
     private AudioSource audi;
 
     void Start()
     {
+        gameClip = mainGameClip;
         if (instance != null && instance != this)
         {
             Destroy(gameObject);
@@ -51,7 +51,7 @@ public class MusicPlayer : MonoBehaviour {
         if (level == 1)
         {
             audi.clip = gameClip;
-            audi.volume = 0.05f;
+            audi.volume = .5f;
         }
         if (level == 2)
         {
@@ -67,5 +67,17 @@ public class MusicPlayer : MonoBehaviour {
         {
             Debug.Log(e.Message);
         }
+    }
+
+    public void SetGameClip(AudioClip clip)
+    {
+        gameClip = clip;
+        audi.Play();
+    }
+
+    public void ResetGameClip()
+    {
+        gameClip = mainGameClip;
+        audi.Play();
     }
 }

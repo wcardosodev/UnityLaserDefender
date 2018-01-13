@@ -6,7 +6,6 @@ public class FormationController : MonoBehaviour {
 
     [SerializeField] GameObject enemyPrefab;
 
-    [SerializeField] Sprite[] enemySprites;
     [SerializeField] float width = 8.5f, height = 7f, padding = 2f, speed = 2f, spawnDelay = 0.75f;
 
     float distance, minX, maxX;
@@ -44,7 +43,6 @@ public class FormationController : MonoBehaviour {
         {
             //Instantiate returns "Object" therefore use "as GameObject" to add the object to the gameobject "folder"       
             GameObject enemy = Instantiate(enemyPrefab, child.transform.position, Quaternion.identity);
-            ChangeEnemySprite(enemy);
             //Child the new Enemy
             enemy.transform.parent = child;
         }
@@ -57,16 +55,10 @@ public class FormationController : MonoBehaviour {
         {
             //Instantiate returns "Object" therefore use "as GameObject" to add the object to the gameobject "folder"       
             GameObject enemy = Instantiate(enemyPrefab, freePosition.position, Quaternion.identity);
-            ChangeEnemySprite(enemy);
             //Child the new Enemy
             enemy.transform.parent = freePosition;
             Invoke("SpawnUntilFull", spawnDelay);
         }
-    }
-
-    void ChangeEnemySprite(GameObject enemy)
-    {
-        enemy.GetComponent<SpriteRenderer>().sprite = enemySprites[Random.Range(0, enemySprites.Length)];
     }
 
     //int RandomEnemyPrefab()

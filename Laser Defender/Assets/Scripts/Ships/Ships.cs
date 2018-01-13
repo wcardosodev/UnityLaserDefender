@@ -16,6 +16,8 @@ public abstract class Ships : MonoBehaviour {
     [SerializeField] protected GameObject explosionEffect;
     [SerializeField] protected AudioClip hitSFX, deathSFX;
 
+    [SerializeField] Sprite[] animationSprites;
+
     protected ScoreKeeper scoreKeeper;
 
     protected bool canAttack = true;
@@ -23,7 +25,7 @@ public abstract class Ships : MonoBehaviour {
     private void Awake()
     {
         scoreKeeper = FindObjectOfType<ScoreKeeper>();
-        Repair();
+        SetToMaxHealth();
     }
 
     public void TakeDamage(float damage)
@@ -35,9 +37,18 @@ public abstract class Ships : MonoBehaviour {
         }
     }
 
+    protected IEnumerator PlayIdleAnimation(float time)
+    {
+        for (int i = 0; i < animationSprites.Length; i++)
+        {
+            GetComponent<SpriteRenderer>().sprite = animationSprites[i];
+            yield return new WaitForSeconds(time);
+        }
+    }
+
     protected abstract void Die();
 
-    public void Repair()
+    public void SetToMaxHealth()
     {
         currentHealth = maxHealth;
     }

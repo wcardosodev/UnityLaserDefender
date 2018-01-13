@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212092700415914550}
   - component: {fileID: 50908756215545294}
   - component: {fileID: 60701980069185194}
+  - component: {fileID: 95033512070471212}
   - component: {fileID: 114685589461716026}
   m_Layer: 8
   m_Name: Player
@@ -138,7 +139,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1004689968649732}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -4, z: 0}
+  m_LocalPosition: {x: 0, y: -5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4929077192945740}
@@ -224,7 +225,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.12, y: 0.75}
+    oldSize: {x: 0.8, y: 1.1}
     newSize: {x: 1.12, y: 0.75}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -232,22 +233,40 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.56, y: -0.073740155}
-      - {x: 0.55114174, y: -0.045118142}
+    - - {x: 0.42411178, y: -0.093153}
+      - {x: 0.23568702, y: -0.054824352}
       - {x: 0.15740182, y: 0.14972806}
-      - {x: 0.10937004, y: 0.20374015}
-      - {x: 0.0440551, y: 0.375}
-      - {x: -0.047480248, y: 0.375}
-      - {x: -0.110178724, y: 0.20463078}
-      - {x: -0.16811025, y: 0.14854334}
-      - {x: -0.5564566, y: -0.04334648}
-      - {x: -0.5582283, y: -0.07122043}
-      - {x: -0.38232273, y: -0.34799227}
+      - {x: 0.15304844, y: 0.16006184}
+      - {x: 0.12514918, y: 0.3898177}
+      - {x: 0.039201852, y: 0.5400071}
+      - {x: -0.03292086, y: 0.5400071}
+      - {x: -0.12959136, y: 0.39875698}
+      - {x: -0.16325712, y: 0.14854336}
+      - {x: -0.23614866, y: -0.06275892}
+      - {x: -0.4065885, y: -0.10048151}
+      - {x: -0.3773653, y: -0.32232618}
       - {x: -0.16811019, y: -0.30070862}
       - {x: -0.12696852, y: -0.3785433}
       - {x: 0.13291341, y: -0.375}
-      - {x: 0.1687401, y: -0.29842514}
-      - {x: 0.376693, y: -0.35322833}
+      - {x: 0.17844647, y: -0.31783772}
+      - {x: 0.39125252, y: -0.31440306}
+--- !u!95 &95033512070471212
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1004689968649732}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 18f29b06fc2608448978a1ca99d3b568, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114685589461716026
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -260,6 +279,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 350
+  currentHealth: 0
   projectiles:
   - {fileID: 1512015022638170, guid: d1c6fcaaf0b50c64d816f339c7a3fd23, type: 2}
   - {fileID: 1512015022638170, guid: 04a2b6717316e7846abfac56df334177, type: 2}
@@ -272,12 +292,16 @@ MonoBehaviour:
   speed: 10
   timeBetweenShots: 0.5
   minPos: {x: -6, y: -4}
-  maxPos: {x: 6, y: -2.5}
+  maxPos: {x: 6, y: -5}
   explosionEffect: {fileID: 1000013462590818, guid: ecdd96beb7f93494880c052dfccf9dc1,
     type: 2}
   hitSFX: {fileID: 8300000, guid: 89e6bc608da7b47d4914f3d9c2484e48, type: 3}
   deathSFX: {fileID: 8300000, guid: 7b5e1f7e53959694a8cb0e7f755dc1aa, type: 3}
-  weapon: 1
+  animationSprites:
+  - {fileID: 21300052, guid: b9f63735ae5b3614fbc24b11ae646196, type: 3}
+  - {fileID: 21300288, guid: b9f63735ae5b3614fbc24b11ae646196, type: 3}
+  weapon: 2
+  translating: 0
 --- !u!212 &212092700415914550
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -310,7 +334,7 @@ SpriteRenderer:
   m_SortingLayerID: -552845837
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0ba6a6bb1fc6b0a42aa9ed41cd9a123c, type: 3}
+  m_Sprite: {fileID: 21300052, guid: b9f63735ae5b3614fbc24b11ae646196, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
