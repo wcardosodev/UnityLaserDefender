@@ -117,6 +117,11 @@ public class FormationController : MonoBehaviour {
         //transform.position = new Vector3(newX, transform.position.y, transform.position.z);
     }
 
+    public void SetEnemy(GameObject enemyToSet)
+    {
+        enemyPrefab = enemyToSet;
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position, new Vector3(width, height));
