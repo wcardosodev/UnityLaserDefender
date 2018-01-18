@@ -4,23 +4,29 @@ using UnityEngine;
 
 public class EnemyBoss : EnemyShips {
 
-    bool bossActivated = false;
+    public bool bossActivated = false;
     bool hasMoved = false;
     float moveDirection = -1;
 
     float moveThreshold = .5f;
     //Change Background music to specific boss music?
     [SerializeField] AudioClip backgroundClip;
+    EnemiesSpawner enemiesSpawner;
 
     enum Phase { Phase01, Phase02, Phase03}
 
     private void Start()
     {
-        if (FindObjectOfType<MusicPlayer>())
-        {
         MusicPlayer musicPlayer = FindObjectOfType<MusicPlayer>();
-        musicPlayer.SetGameClip(backgroundClip);
-        }
+        enemiesSpawner = FindObjectOfType<EnemiesSpawner>();
+
+        //if (musicPlayer)
+        //{
+        //    musicPlayer.SetGameClip(backgroundClip);
+        //}
+
+        minPos.x = leftWorldPos.x + padding;
+        maxPos.x = rightWorldPos.x - padding;
 
         GetComponent<PolygonCollider2D>().enabled = false;
     }
@@ -130,6 +136,6 @@ public class EnemyBoss : EnemyShips {
 
         scoreKeeper.Score(pointsWorth);
 
-        Destroy(gameObject);
+        Destroy(gameObject, .2f);
     }
 }

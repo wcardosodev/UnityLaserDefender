@@ -11,10 +11,14 @@ public abstract class Ships : MonoBehaviour {
 
     [SerializeField] protected float speed = 10, timeBetweenShots = 1f;
 
-    [SerializeField] protected Vector2 minPos, maxPos;
+    protected Vector2 minPos, maxPos;
+    protected Vector3 leftWorldPos, rightWorldPos;
 
-    [SerializeField] protected GameObject explosionEffect;
+    [SerializeField] protected GameObject explosionEffect, damagedEffect;
     [SerializeField] protected AudioClip hitSFX, deathSFX;
+    GameObject damaged = null;
+
+    [SerializeField] protected float padding;
 
     [SerializeField] Sprite[] animationSprites;
 
@@ -26,13 +30,30 @@ public abstract class Ships : MonoBehaviour {
     {
         scoreKeeper = FindObjectOfType<ScoreKeeper>();
         SetToMaxHealth();
+
+        float distance = transform.position.z - Camera.main.transform.position.z;
+        leftWorldPos = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, distance));
+        rightWorldPos = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, distance));
     }
 
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
+        if (HealthAsPercent <= .5)
+        {
+            if (GetComponent<PlayerController>())
+            {
+                damaged = Instantiate(damagedEffect, transform.position, Quaternion.Euler(new Vector3(0,0,180)));
+            }
+            else
+            {
+                damaged = Instantiate(damagedEffect, transform.position, Quaternion.identity);
+            }
+            damaged.transform.parent = gameObject.transform;
+        }
         if (currentHealth <= 0)
         {
+            Destroy(damaged);
             Die();
         }
     }
@@ -50,6 +71,12 @@ public abstract class Ships : MonoBehaviour {
 
     public void SetToMaxHealth()
     {
+        Destroy(damaged);
         currentHealth = maxHealth;
+    }
+
+    public float HealthAsPercent
+    {
+        get { return currentHealth / maxHealth; }
     }
 }

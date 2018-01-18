@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 95786249872348816}
   - component: {fileID: 114460985455433858}
   m_Layer: 9
-  m_Name: Enemy Boss
+  m_Name: Enemy_Boss_01
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -240,14 +240,13 @@ MonoBehaviour:
   - {fileID: 4797429946050344}
   - {fileID: 4634497122386612}
   - {fileID: 4239925805206170}
-  speed: 4
+  speed: 1
   timeBetweenShots: 1
-  minPos: {x: -6.5, y: 1.5}
-  maxPos: {x: 6.5, y: 3.48}
-  explosionEffect: {fileID: 1000013462590818, guid: ecdd96beb7f93494880c052dfccf9dc1,
+  explosionEffect: {fileID: 1000013063239222, guid: 843695ef5e6d39f458b99e399ccc09b1,
     type: 2}
   hitSFX: {fileID: 8300000, guid: b99da9a57308d4ba1bee1cf1d9038376, type: 3}
   deathSFX: {fileID: 8300000, guid: cabfae866cab347928b74b7d0ca6bfa9, type: 3}
+  padding: 3
   animationSprites:
   - {fileID: 21300040, guid: f19c70b788847dd45b018b25f3628e4e, type: 3}
   - {fileID: 21300042, guid: f19c70b788847dd45b018b25f3628e4e, type: 3}
@@ -259,8 +258,9 @@ MonoBehaviour:
   maxFireRateDeclinePerDiff: 0.15
   minFireRateCap: 0.5
   maxFireRateCap: 1
-  pointsWorth: 100
+  pointsWorth: 0
   pickups: []
+  bossActivated: 0
   backgroundClip: {fileID: 8300000, guid: 7169cb7a01cdd2a43b01291ebbecf17d, type: 3}
 --- !u!212 &212383704973712554
 SpriteRenderer:

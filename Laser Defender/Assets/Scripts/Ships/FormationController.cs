@@ -10,7 +10,7 @@ public class FormationController : MonoBehaviour {
 
     float distance, minX, maxX;
     bool moveRight = true;
-    bool spawn = false;
+    bool spawn = true;
     
 
     // Use this for initialization
@@ -21,15 +21,13 @@ public class FormationController : MonoBehaviour {
 
         minX = leftWorldPos.x;
         maxX = rightWorldPos.x;
-
-        SpawnUntilFull();
     }
 	
 	// Update is called once per frame
 	void Update () {
         MoveShips();
 
-        if (AllMembersDead())
+        if (AllMembersDead() && !FindObjectOfType<EnemyBoss>())
         {
             SpawnUntilFull();
         }
@@ -40,10 +38,8 @@ public class FormationController : MonoBehaviour {
     void SpawnEnemies()
     {
         foreach (Transform child in transform)
-        {
-            //Instantiate returns "Object" therefore use "as GameObject" to add the object to the gameobject "folder"       
+        {     
             GameObject enemy = Instantiate(enemyPrefab, child.transform.position, Quaternion.identity);
-            //Child the new Enemy
             enemy.transform.parent = child;
         }
     }
@@ -53,18 +49,16 @@ public class FormationController : MonoBehaviour {
         Transform freePosition = NextFreePosition();
         if(freePosition != null)
         {
-            //Instantiate returns "Object" therefore use "as GameObject" to add the object to the gameobject "folder"       
             GameObject enemy = Instantiate(enemyPrefab, freePosition.position, Quaternion.identity);
-            //Child the new Enemy
             enemy.transform.parent = freePosition;
             Invoke("SpawnUntilFull", spawnDelay);
         }
     }
 
-    //int RandomEnemyPrefab()
-    //{
-    //    return Random.Range(0, enemyPrefab.Length);
-    //}
+    public void SetSpawning(bool spawnEnemy)
+    {
+        spawn = spawnEnemy;
+    }
 
     Transform NextFreePosition()
     {
@@ -72,14 +66,13 @@ public class FormationController : MonoBehaviour {
         {
             if(child.childCount == 0)
             {
-                Debug.Log(child);
                 return child;
             }
         }
         return null;
     }
 
-    bool AllMembersDead()
+    public bool AllMembersDead()
     {
         foreach(Transform child in transform)
         {

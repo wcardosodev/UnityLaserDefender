@@ -10,8 +10,9 @@ public class PlayerController : Ships {
 
     public bool translating = false;
 
+    float distance;
+
     void Start () {
-        
         try
         {
             levelManager = FindObjectOfType<LevelManager>();
@@ -21,25 +22,28 @@ public class PlayerController : Ships {
             print("Missing Level Manager");
         }
 
+        minPos.y = -5;
+        maxPos.y = -5;
+
+        minPos.x = leftWorldPos.x + padding;
+        maxPos.x = rightWorldPos.x - padding;
+
         ScoreKeeper.Reset();
     }
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (weapon == 1)
         {
-            if(weapon == 1)
-            {
-                StartCoroutine(StandardProjectile(1));
-            }
-            else if(weapon == 2)
-            {
-                StartCoroutine(StandardProjectile(5));
-            }
-            else if(weapon == 3)
-            {
-                StartCoroutine(HomingRockets());
-            }
+            StartCoroutine(StandardProjectile(1));
+        }
+        else if (weapon == 2)
+        {
+            StartCoroutine(StandardProjectile(5));
+        }
+        else if (weapon == 3)
+        {
+            StartCoroutine(HomingRockets());
         }
 
         if (!translating)
@@ -139,10 +143,5 @@ public class PlayerController : Ships {
         }
 
         levelManager.LoadLevel("Win");
-    }
-
-    public float HealthAsPercent
-    {
-        get { return currentHealth / maxHealth; }
     }
 }

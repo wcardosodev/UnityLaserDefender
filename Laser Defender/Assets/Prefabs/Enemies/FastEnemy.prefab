@@ -163,19 +163,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 0
-  currentHealth: 25
   projectiles:
   - {fileID: 1512015022638170, guid: 6ba2f07540363184d957816f9df5daae, type: 2}
   firepoints:
   - {fileID: 4247311384876784}
   speed: 20
   timeBetweenShots: 1
-  minPos: {x: 0, y: 0}
-  maxPos: {x: 0, y: 0}
-  explosionEffect: {fileID: 1000013462590818, guid: ecdd96beb7f93494880c052dfccf9dc1,
+  explosionEffect: {fileID: 1000013063239222, guid: 843695ef5e6d39f458b99e399ccc09b1,
     type: 2}
   hitSFX: {fileID: 8300000, guid: cf95aadeb293b614885edfd50ccee530, type: 3}
   deathSFX: {fileID: 8300000, guid: 225fff8a615180d41bfaba5fe3427416, type: 3}
+  padding: 1
   animationSprites:
   - {fileID: 21300056, guid: f19c70b788847dd45b018b25f3628e4e, type: 3}
   - {fileID: 21300058, guid: f19c70b788847dd45b018b25f3628e4e, type: 3}
@@ -188,12 +186,12 @@ MonoBehaviour:
   minFireRateCap: 0.5
   maxFireRateCap: 1
   pointsWorth: 150
-  dropChance: 15
-  pointsPerDifficultyIncrease: 1250
   pickups:
   - {fileID: 1602165440065108, guid: cfaca7c09662d054a8d0ed17e2ea5030, type: 2}
   - {fileID: 1602165440065108, guid: 10f4883b18b58e14eb9ded69d528e65f, type: 2}
   - {fileID: 1602165440065108, guid: c55ee6b07d02171468d4839376c63d69, type: 2}
+  dropChance: 15
+  pointsPerDifficultyIncrease: 1250
   projectileDamage: 50
 --- !u!212 &212753727088128708
 SpriteRenderer:

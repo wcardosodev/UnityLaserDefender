@@ -66,7 +66,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1794595754302190}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.6435337, y: 1.6586206, z: 0}
+  m_LocalPosition: {x: -3.1827736, y: -2.812319, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4247311384876784}
@@ -163,19 +163,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
-  currentHealth: 0
   projectiles:
   - {fileID: 1512015022638170, guid: 6ba2f07540363184d957816f9df5daae, type: 2}
   firepoints:
   - {fileID: 4247311384876784}
   speed: 10
   timeBetweenShots: 1
-  minPos: {x: 0, y: 0}
-  maxPos: {x: 0, y: 0}
   explosionEffect: {fileID: 1000013462590818, guid: ecdd96beb7f93494880c052dfccf9dc1,
     type: 2}
+  damagedEffect: {fileID: 1000012826572674, guid: 6a2d4546cffca1c4d93e0b7ea62a17a4,
+    type: 2}
+  damageEffectPosition: {x: 0, y: 0}
   hitSFX: {fileID: 8300000, guid: cf95aadeb293b614885edfd50ccee530, type: 3}
   deathSFX: {fileID: 8300000, guid: 225fff8a615180d41bfaba5fe3427416, type: 3}
+  padding: 1
   animationSprites:
   - {fileID: 21300048, guid: f19c70b788847dd45b018b25f3628e4e, type: 3}
   - {fileID: 21300050, guid: f19c70b788847dd45b018b25f3628e4e, type: 3}
@@ -188,12 +189,12 @@ MonoBehaviour:
   minFireRateCap: 0.5
   maxFireRateCap: 1
   pointsWorth: 150
-  dropChance: 15
-  pointsPerDifficultyIncrease: 1250
   pickups:
   - {fileID: 1602165440065108, guid: cfaca7c09662d054a8d0ed17e2ea5030, type: 2}
   - {fileID: 1602165440065108, guid: 10f4883b18b58e14eb9ded69d528e65f, type: 2}
   - {fileID: 1602165440065108, guid: c55ee6b07d02171468d4839376c63d69, type: 2}
+  dropChance: 15
+  pointsPerDifficultyIncrease: 1250
   projectileDamage: 50
 --- !u!212 &212753727088128708
 SpriteRenderer:

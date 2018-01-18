@@ -279,7 +279,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 350
-  currentHealth: 0
   projectiles:
   - {fileID: 1512015022638170, guid: d1c6fcaaf0b50c64d816f339c7a3fd23, type: 2}
   - {fileID: 1512015022638170, guid: 04a2b6717316e7846abfac56df334177, type: 2}
@@ -291,16 +290,17 @@ MonoBehaviour:
   - {fileID: 4422399801679984}
   speed: 10
   timeBetweenShots: 0.5
-  minPos: {x: -6, y: -4}
-  maxPos: {x: 6, y: -5}
   explosionEffect: {fileID: 1000013462590818, guid: ecdd96beb7f93494880c052dfccf9dc1,
+    type: 2}
+  damagedEffect: {fileID: 1000012826572674, guid: 6a2d4546cffca1c4d93e0b7ea62a17a4,
     type: 2}
   hitSFX: {fileID: 8300000, guid: 89e6bc608da7b47d4914f3d9c2484e48, type: 3}
   deathSFX: {fileID: 8300000, guid: 7b5e1f7e53959694a8cb0e7f755dc1aa, type: 3}
+  padding: 1
   animationSprites:
   - {fileID: 21300052, guid: b9f63735ae5b3614fbc24b11ae646196, type: 3}
   - {fileID: 21300288, guid: b9f63735ae5b3614fbc24b11ae646196, type: 3}
-  weapon: 2
+  weapon: 1
   translating: 0
 --- !u!212 &212092700415914550
 SpriteRenderer:
